@@ -1,64 +1,116 @@
-# AnkiCardGenerations
+# ankihelper
 
-_Author : Ling Thang_
+Generate Anki `.apkg` decks from JSON (MCQ) or TSV (basic) card data.
 
-_Last Updated : 04/16/2025_
+_Part of the [Seya](https://github.com/tataang/Seya) study ecosystem._
 
-**Requires**
+---
 
-```
-pip install genanki
-```
+## Installation
 
-**Usage**
-
-```
-python3 makecards.py <deckname> <json_file>
+```bash
+pip install ankihelper
 ```
 
-**output**
+Or for local development:
 
-`deckname`.apkg
+```bash
+git clone https://github.com/tataang/AnkiHelper.git
+cd AnkiHelper
+pip install -e .
+```
 
-requires you to have the application installed on your computer to open the file.
+---
 
-## What is AnkiCards?
+## CLI usage
 
-[AnkiCards](https://apps.ankiweb.net/) is a flashcard program available for free on computers and $30 on mobile devices. It is a tool that I've been using to cram for my exams.
+```bash
+# JSON — multiple-choice question cards
+ankihelper "Cloud Computing" cards.json
 
-It is a great tool to practice **Active Recall** and **Spaced Repetition**. Or to cram last minute for an exam, like I am doing right now :)
+# TSV — basic front/back cards
+ankihelper "Calc 2 Formulas" formulas.tsv
 
-I don't know if it works but I know I have an A in all my class so far 🤷‍♂️.
+# Explicit output path (recommended for subprocess callers)
+ankihelper "Cloud Computing" cards.json --output /path/to/deck.apkg
 
-## What is AnkiCardGenerations?
+# Override format detection
+ankihelper "My Deck" cards.data --format tsv
+```
 
-The following script, `makecards.py`, is a tool that I created to help me generate Anki cards from a JSON file using the [Genanki](https://pypi.org/project/genanki/) package. It simplifies the process of creating `.apkg` files, which can be imported into the Anki application.
+On success the resolved `.apkg` path is printed to stdout (exit 0).  
+On failure a human-readable message is printed to stderr (exit 1).
 
-general structure for the json file:
+---
+
+## Input formats
+
+### JSON — MCQ cards
 
 ```json
 {
-  "deck_name": "Name of the deck",
   "cards": [
     {
-      "question": "Question",
-      "choices": [
-        "choice1",
-        "choice2",
-        "choice3",
-        "choice4"
-      ],
-      "correct_answer": "choice1",
-      "explanation": "Because I said so"
-    },
-    ...
+      "question": "What does CPU stand for?",
+      "choices": ["Central Processing Unit", "Core Power Unit", "Control Processing Unit"],
+      "correct_answer": "Central Processing Unit",
+      "explanation": "CPU stands for Central Processing Unit.",
+      "tags": ["chapter-1"]
+    }
   ]
 }
 ```
 
-### Future Plans
+`correct_answer` must be an element of `choices` — validated on parse.  
+`tags` is optional.
 
-- [ ] Integrate OPENAI API to generate cards from PDF
-- [ ] Use OPENAI API to generate questions and answers
-- [ ] Add support for images
-- [ ] Add styling to cards (optional just for fun)
+### TSV — basic cards
+
+Tab-delimited UTF-8. Optional header row (`front\tback`) is auto-detected and skipped.
+
+```
+front	back
+What is spaced repetition?	A technique that spaces reviews over time.
+What is active recall?	Actively retrieving information from memory.
+```
+
+---
+
+## Library usage
+
+```python
+from pathlib import Path
+from ankihelper import AnkiCardDeck, MCQCard, BasicCard
+
+deck = AnkiCardDeck(deck_name="My Deck")
+
+deck.add_card(MCQCard(
+    question="What does RAM stand for?",
+    choices=["Random Access Memory", "Read Access Module"],
+    correct_answer="Random Access Memory",
+    explanation="RAM is the primary short-term memory of a computer.",
+    tags=["hardware"],
+))
+
+deck.add_card(BasicCard(
+    front="What is a CPU?",
+    back="The central processing unit — the brain of a computer.",
+))
+
+deck.save_deck(Path("output/my_deck.apkg"))
+```
+
+---
+
+## Running tests
+
+```bash
+pip install pytest
+pytest tests/
+```
+
+---
+
+## What is Anki?
+
+[Anki](https://apps.ankiweb.net/) is a free flashcard program that uses spaced repetition and active recall to maximise long-term retention. `ankihelper` generates `.apkg` files that can be imported directly into Anki.
