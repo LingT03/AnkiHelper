@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# DEPRECATED: this script has been superseded by the ankihelper package.
+# Use: ankihelper <deck_name> <input_file>
+# Or:  python -m ankihelper <deck_name> <input_file>
+# This file will be removed in a future release.
 
 import sys
 import json
