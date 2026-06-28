@@ -1,2 +1,11 @@
 # Data
 Calc2
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+*.apkg.DS_Store
