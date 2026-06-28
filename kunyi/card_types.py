@@ -1,4 +1,4 @@
-"""Card type dataclasses for ankihelper.
+"""Card type dataclasses for kunyi.
 
 Each dataclass is a pure data container with no genanki dependency.
 Optional fields (tags, media_paths) are reserved for future use and map

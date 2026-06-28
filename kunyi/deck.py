@@ -1,4 +1,4 @@
-"""Deck orchestration for ankihelper.
+"""Deck orchestration for kunyi.
 
 AnkiCardDeck wraps a genanki.Deck and handles model selection, note
 construction, and media collection. It accepts both BasicCard and MCQCard
@@ -14,8 +14,8 @@ from typing import Union
 
 import genanki
 
-from ankihelper.card_types import BasicCard, MCQCard
-from ankihelper.models import basic_model, mcq_model
+from kunyi.card_types import BasicCard, MCQCard
+from kunyi.models import basic_model, mcq_model
 
 Card = Union[BasicCard, MCQCard]
 

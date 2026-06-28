@@ -1,22 +1,22 @@
-# ankihelper
+# kunyi
 
 Generate Anki `.apkg` decks from JSON (MCQ) or TSV (basic) card data.
 
-_Part of the [Seya](https://github.com/tataang/Seya) study ecosystem._
+_Part of the [Seya](https://github.com/LingT03/Seya) study ecosystem._
 
 ---
 
 ## Installation
 
 ```bash
-pip install ankihelper
+pip install kunyi
 ```
 
 Or for local development:
 
 ```bash
-git clone https://github.com/tataang/AnkiHelper.git
-cd AnkiHelper
+git clone https://github.com/LingT03/Kunyi.git
+cd Kunyi
 pip install -e .
 ```
 
@@ -26,16 +26,16 @@ pip install -e .
 
 ```bash
 # JSON — multiple-choice question cards
-ankihelper "Cloud Computing" cards.json
+kunyi "Cloud Computing" cards.json
 
 # TSV — basic front/back cards
-ankihelper "Calc 2 Formulas" formulas.tsv
+kunyi "Calc 2 Formulas" formulas.tsv
 
 # Explicit output path (recommended for subprocess callers)
-ankihelper "Cloud Computing" cards.json --output /path/to/deck.apkg
+kunyi "Cloud Computing" cards.json --output /path/to/deck.apkg
 
 # Override format detection
-ankihelper "My Deck" cards.data --format tsv
+kunyi "My Deck" cards.data --format tsv
 ```
 
 On success the resolved `.apkg` path is printed to stdout (exit 0).  
@@ -80,7 +80,7 @@ What is active recall?	Actively retrieving information from memory.
 
 ```python
 from pathlib import Path
-from ankihelper import AnkiCardDeck, MCQCard, BasicCard
+from kunyi import AnkiCardDeck, MCQCard, BasicCard
 
 deck = AnkiCardDeck(deck_name="My Deck")
 
@@ -113,4 +113,4 @@ pytest tests/
 
 ## What is Anki?
 
-[Anki](https://apps.ankiweb.net/) is a free flashcard program that uses spaced repetition and active recall to maximise long-term retention. `ankihelper` generates `.apkg` files that can be imported directly into Anki.
+[Anki](https://apps.ankiweb.net/) is a free flashcard program that uses spaced repetition and active recall to maximise long-term retention. `kunyi` generates `.apkg` files that can be imported directly into Anki.

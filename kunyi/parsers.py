@@ -1,4 +1,4 @@
-"""Input parsers for ankihelper.
+"""Input parsers for kunyi.
 
 Each parser reads a file and returns a list of typed card objects.
 Supported formats:
@@ -12,7 +12,7 @@ import csv
 import json
 from pathlib import Path
 
-from ankihelper.card_types import BasicCard, MCQCard
+from kunyi.card_types import BasicCard, MCQCard
 
 
 def parse_json(path: Path) -> list[MCQCard]:

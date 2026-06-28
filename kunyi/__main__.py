@@ -1,8 +1,8 @@
-"""CLI entry point for ankihelper.
+"""CLI entry point for kunyi.
 
 Usage
 -----
-    ankihelper <deck_name> <input_file> [--format {json,tsv}] [--output PATH]
+    kunyi <deck_name> <input_file> [--format {json,tsv}] [--output PATH]
 
 On success:  the resolved output path is printed to stdout, exit 0.
 On failure:  a human-readable message is printed to stderr, exit 1.
@@ -19,9 +19,9 @@ import argparse
 import sys
 from pathlib import Path
 
-from ankihelper.card_types import BasicCard, MCQCard
-from ankihelper.deck import AnkiCardDeck
-from ankihelper.parsers import parse_json, parse_tsv
+from kunyi.card_types import BasicCard, MCQCard
+from kunyi.deck import AnkiCardDeck
+from kunyi.parsers import parse_json, parse_tsv
 
 
 def _detect_format(path: Path) -> str:
@@ -77,7 +77,7 @@ def _resolve_output(deck_name: str, output: str | None) -> Path:
 def main() -> None:
     """Parse arguments and generate the .apkg deck."""
     parser = argparse.ArgumentParser(
-        prog="ankihelper",
+        prog="kunyi",
         description="Generate an Anki .apkg deck from JSON or TSV card data.",
     )
     parser.add_argument("deck_name", help="Name of the Anki deck.")
